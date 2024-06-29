@@ -1,17 +1,41 @@
-﻿use ferris_says::say; // Just following the guide
-use std::io::{stdout, BufWriter};
+﻿use std::io;
+use rand::Rng;
+use std::cmp::Ordering;
 
-fn main() {
-    // more knoweledge here
-    let stdout = stdout();
 
-    let sms = String::from("Ебало заверни свое пыль, пахта, сметана, закончили!!!!");
+fn main(){
+    println!("Guess the number within 1..= 100...");
 
-    let width = sms.chars().count();
+    let guess_number = rand::thread_rng().gen_range(1..=100);
 
-    let mut writer = BufWriter::new(stdout.lock());
+    loop {
+        println!("Enter your number: {guess_number}");
 
-    say(&sms, width, &mut writer).unwrap();
+        let mut guessed_number = String::new();
 
-    //println!("Hello, world!");
+        //let mut _number_guessed = string::new();
+
+        io::stdin()
+            .read_line(&mut guessed_number)
+            .expect("Error message here...");
+    
+        let guessed_number: u32 = match guessed_number.trim().parse() {
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        println!("You have guessed number: {guessed_number}");
+
+        match guessed_number.cmp(&guess_number){
+            Ordering::Less => println!("Malenjkij nomer"),
+            Ordering::Greater => println!("Bolshoi"),
+            Ordering::Equal => {
+                println!("Bingo!!!!");
+                break;
+            }
+        }
+    }
 }
+
+
+
