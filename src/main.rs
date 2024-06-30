@@ -1,41 +1,58 @@
 ﻿use std::io;
 use rand::Rng;
+
 use std::cmp::Ordering;
 
 
-fn main(){
-    println!("Guess the number within 1..= 100...");
+fn main() {
+    println!("Тут начинается игра УГАДАЙ ЧИСЛО!");
 
-    let guess_number = rand::thread_rng().gen_range(1..=100);
+    let random_number = rand::thread_rng().gen_range(1..=100);
 
-    loop {
-        println!("Enter your number: {guess_number}");
+    loop{
+        println!("Введите секретное число: ");
 
-        let mut guessed_number = String::new();
-
-        //let mut _number_guessed = string::new();
+        let mut user_guesses_int_number = String::new();
 
         io::stdin()
-            .read_line(&mut guessed_number)
-            .expect("Error message here...");
-    
-        let guessed_number: u32 = match guessed_number.trim().parse() {
+            .read_line(&mut user_guesses_int_number)
+            .expect("Там какая-то проблема с вводом числа...");
+        
+
+        let user_guesses_int_number: u32 = match user_guesses_int_number.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
         };
 
-        println!("You have guessed number: {guessed_number}");
+        println!("Случайное число: {random_number}");
 
-        match guessed_number.cmp(&guess_number){
-            Ordering::Less => println!("Malenjkij nomer"),
-            Ordering::Greater => println!("Bolshoi"),
+   
+
+   
+
+        match user_guesses_int_number.cmp(&random_number){
+            Ordering::Less => println!("Less..."),
+            Ordering::Greater => println!("Greater..."),
             Ordering::Equal => {
-                println!("Bingo!!!!");
+                println!("Equal...BINGO!!!");
                 break;
             }
         }
-    }
+        
+        println!("Ты угадал правильное число : {}", user_guesses_int_number);
+        //let mut user_guesses_number : u32  = parse() 
+        }
+    
+
 }
+
+
+
+
+
+
+
+
 
 
 
